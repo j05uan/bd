@@ -200,3 +200,8 @@ INSERT INTO detallePedido (idPedido, idProducto, cantidad, numero_linea) VALUES
 (1, 1, 2, 1),
 (1, 2, 1, 1),
 (3, 3, 3, 1);
+
+INSERT INTO empleado (idEmpleado, nombre, apellidos, extension, email, idOficina, codigoJefe, idPuesto) VALUES
+(8, 'Camila', 'Solano', 101, 'camila.solano@example.com', 1, NULL, 1),
+(7, 'Santiago', 'Serrano', 102, 'santi@example.com', 1, NULL, 1),
+(9, 'Carlos', 'Lòpez', 101, 'carlo@example.com', 1, 7, 1);
