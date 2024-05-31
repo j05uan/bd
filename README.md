@@ -1,6 +1,6 @@
 # bd
 
-
+---mysql
 ### Resultado
 | idOficina | ciudad  |
 |         1 | Sevilla |
