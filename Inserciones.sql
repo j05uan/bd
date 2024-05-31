@@ -197,6 +197,6 @@ INSERT INTO pedido (fechaPedido, fechaEsperada, fechaEntrega, idEstado, comentar
 ('2024-05-28', '2024-06-03', '2024-06-01', 3, 'Dirección de entrega especial', 2);
 
 INSERT INTO detallePedido (idPedido, idProducto, cantidad, numero_linea) VALUES
-(10, 1, 2, 1),
-(12, 2, 1, 1),
-(10, 3, 3, 1);
+(1, 1, 2, 1),
+(1, 2, 1, 1),
+(3, 3, 3, 1);
