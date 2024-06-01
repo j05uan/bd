@@ -202,16 +202,14 @@ WHERE p.pais = 'España' AND c.ciudad = 'Madrid' AND (cl.idEmpleado = 11 OR cl.i
 
 No hay en españa.
 
-Consultas multitabla (Composición interna)
-
-1. Obtén un listado con el nombre de cada cliente y el nombre y apellido de su
-representante de ventas.
-
+```mysql
+-- 1. Obtén un listado con el nombre de cada cliente y el nombre y apellido de su representante de ventas.
 SELECT cl.nombreContacto AS nombreCliente, e.nombre AS nombreEmpleado, e.apellidos AS apellidosEmpleado 
 FROM cliente cl 
 JOIN empleado e ON cl.idEmpleado = e.idEmpleado 
 JOIN puesto p ON e.idPuesto = p.idPuesto 
 WHERE p.puesto = 'Representante de Ventas';
+
 +---------------+----------------+-------------------+
 | nombreCliente | nombreEmpleado | apellidosEmpleado |
 +---------------+----------------+-------------------+
@@ -219,40 +217,35 @@ WHERE p.puesto = 'Representante de Ventas';
 | Juan Pablo    | Yohber         | Gomez             |
 +---------------+----------------+-------------------+
 
-2. Muestra el nombre de los clientes que hayan realizado pagos junto con el
-nombre de sus representantes de ventas.
-
+-- 2. Muestra el nombre de los clientes que hayan realizado pagos junto con el nombre de sus representantes de ventas.
 SELECT cl.nombreContacto AS nombreCliente, e.nombre AS nombreEmpleado, e.apellidos AS apellidosEmpleado 
 FROM cliente cl 
 JOIN empleado e ON cl.idEmpleado = e.idEmpleado 
 JOIN puesto p ON e.idPuesto = p.idPuesto 
 JOIN pago pg ON cl.idCliente<>pg.idCliente
 WHERE p.puesto = 'Representante de Ventas';
+
 +---------------+----------------+-------------------+
 | nombreCliente | nombreEmpleado | apellidosEmpleado |
 +---------------+----------------+-------------------+
 | María         | María          | Gómez             |
 +---------------+----------------+-------------------+
 
-3. Muestra el nombre de los clientes que no hayan realizado pagos junto con
-el nombre de sus representantes de ventas.
-
+-- 3. Muestra el nombre de los clientes que no hayan realizado pagos junto con el nombre de sus representantes de ventas.
 SELECT cl.nombreContacto AS nombreCliente, e.nombre AS nombreEmpleado, e.apellidos AS apellidosEmpleado 
 FROM cliente cl 
 JOIN empleado e ON cl.idEmpleado = e.idEmpleado 
 JOIN puesto p ON e.idPuesto = p.idPuesto 
 LEFT JOIN pago pg ON cl.idCliente = pg.idCliente 
 WHERE p.puesto = 'Representante de Ventas' AND pg.idPago IS NULL;
+
 +---------------+----------------+-------------------+
 | nombreCliente | nombreEmpleado | apellidosEmpleado |
 +---------------+----------------+-------------------+
 | Juan Pablo    | Yohber         | Gomez             |
 +---------------+----------------+-------------------+
 
-4. Devuelve el nombre de los clientes que han hecho pagos y el nombre de sus
-representantes junto con la ciudad de la oficina a la que pertenece el
-representante.
-
+-- 4. Devuelve el nombre de los clientes que han hecho pagos y el nombre de sus representantes junto con la ciudad de la oficina a la que pertenece el representante.
 SELECT c.nombre AS Nombre_Cliente, e.nombre AS Nombre_Representante, ci.ciudad AS Ciudad_Oficina
 FROM cliente c
 INNER JOIN empleado e ON c.idEmpleado = e.idEmpleado
@@ -260,15 +253,15 @@ INNER JOIN oficina o ON e.idOficina = o.idOficina
 INNER JOIN ciudad ci ON o.idCiudad = ci.idCiudad
 INNER JOIN pago p ON c.idCliente = p.idCliente;
 
-Nombre_Cliente  |  Nombre_Representante  |  Ciudad_Oficina
------------------------------------------------------------
-Empresa A       |  Juan                  |  Sevilla
-Empresa B       |  María                 |  Málaga
-Empresa C       |  Pedro                 |  Granada
++---------------+----------------+-------------------+
+| Nombre_Cliente | Nombre_Representante | Ciudad_Oficina |
++---------------+----------------+-------------------+
+| Empresa A     | Juan          | Sevilla           |
+| Empresa B     | María         | Málaga            |
+| Empresa C     | Pedro         | Granada           |
++---------------+----------------+-------------------+
 
-5. Devuelve el nombre de los clientes que no hayan hecho pagos y el nombre
-de sus representantes junto con la ciudad de la oficina a la que pertenece el
-representante.
+-- 5. Devuelve el nombre de los clientes que no hayan hecho pagos y el nombre de sus representantes junto con la ciudad de la oficina a la que pertenece el representante.
 SELECT c.nombre AS Nombre_Cliente, e.nombre AS Nombre_Representante, ci.ciudad AS Ciudad_Oficina
 FROM cliente c
 INNER JOIN empleado e ON c.idEmpleado = e.idEmpleado
@@ -276,76 +269,61 @@ INNER JOIN oficina o ON e.idOficina = o.idOficina
 INNER JOIN ciudad ci ON o.idCiudad = ci.idCiudad
 LEFT JOIN pago p ON c.idCliente = p.idCliente
 WHERE p.idPago IS NULL;
-Nombre_Cliente  |  Nombre_Representante  |  Ciudad_Oficina
------------------------------------------------------------
-Empresa XYZ     |  Jorge                 |  Valencia
-Empresa XYZ     |  Laura                 |  Barcelona
 
-6. Lista la dirección de las oficinas que tengan clientes en Fuenlabrada.
++---------------+----------------+-------------------+
+| Nombre_Cliente | Nombre_Representante | Ciudad_Oficina |
++---------------+----------------+-------------------+
+| Empresa XYZ   | Jorge          | Valencia         |
+| Empresa XYZ   | Laura          | Barcelona         |
++---------------+----------------+-------------------+
+
+-- 6. Lista la dirección de las oficinas que tengan clientes en Fuenlabrada.
 SELECT o.direccion AS Direccion_Oficina
 FROM oficina o
 INNER JOIN ciudad ci ON o.idCiudad = ci.idCiudad
 INNER JOIN cliente c ON o.idOficina = c.idOficina
 WHERE ci.ciudad = 'Fuenlabrada';
-Direccion_Oficina
-------------------
-Calle Mayor 123
-Calle Principal 456
 
-7. Devuelve el nombre de los clientes y el nombre de sus representantes junto
-con la ciudad de la oficina a la que pertenece el representante.
++-------------------+
+| Direccion_Oficina |
++-------------------+
+| Calle Mayor 123   |
+| Calle Principal 456|
++-------------------+
 
+-- 7. Devuelve el nombre de los clientes y el nombre de sus representantes junto con la ciudad de la oficina a la que pertenece el representante.
 SELECT c.nombre AS Nombre_Cliente, e.nombre AS Nombre_Representante, ci.ciudad AS Ciudad_Oficina
 FROM cliente c
 INNER JOIN empleado e ON c.idEmpleado = e.idEmpleado
 INNER JOIN oficina o ON e.idOficina = o.idOficina
 INNER JOIN ciudad ci ON o.idCiudad = ci.idCiudad;
 
-Nombre_Cliente  |  Nombre_Representante  |  Ciudad_Oficina
------------------------------------------------------------
-Empresa A       |  Juan                  |  Sevilla
-Empresa B       |  María                 |  Málaga
-Empresa C       |  Pedro                 |  Granada
++---------------+----------------+-------------------+
+| Nombre_Cliente | Nombre_Representante | Ciudad_Oficina |
++---------------+----------------+-------------------+
+| Empresa A     | Juan          | Sevilla           |
+| Empresa B     | María         | Málaga            |
+| Empresa C     | Pedro         | Granada           |
++---------------+----------------+-------------------+
 
-8. Devuelve un listado con el nombre de los empleados junto con el nombre
-de sus jefes.
+-- 8. Devuelve un listado con el nombre de los empleados junto con el nombre de sus jefes.
 SELECT e1.nombre AS Nombre_Empleado, e2.nombre AS Nombre_Jefe
 FROM empleado e1
 LEFT JOIN empleado e2 ON e1.codigoJefe = e2.idEmpleado;
-Nombre_Empleado  |  Nombre_Jefe
---------------------------------
-Juan             |  NULL
-María            |  Juan
-Pedro            |  Juan
-Laura            |  Juan
 
-9. Devuelve un listado que muestre el nombre de cada empleados, el nombre
-de su jefe y el nombre del jefe de sus jefe.
-
+-- 9. Devuelve un listado que muestre el nombre de cada empleado, el nombre de su jefe y el nombre del jefe de su jefe.
 SELECT e1.nombre AS Nombre_Empleado, e2.nombre AS Nombre_Jefe, e3.nombre AS Nombre_Jefe_Jefe
 FROM empleado e1
 LEFT JOIN empleado e2 ON e1.codigoJefe = e2.idEmpleado
 LEFT JOIN empleado e3 ON e2.codigoJefe = e3.idEmpleado;
-Nombre_Empleado  |  Nombre_Jefe  |  Nombre_Jefe_Jefe
------------------------------------------------------
-Juan             |  NULL         |  NULL
-María            |  Juan         |  NULL
-Pedro            |  Juan         |  NULL
-Laura            |  Juan         |  NULL
 
-10. Devuelve el nombre de los clientes a los que no se les ha entregado a
-tiempo un pedido.
+-- 10. Devuelve el nombre de los clientes a los que no se les ha entregado a tiempo un pedido.
 SELECT c.nombre AS Nombre_Cliente
 FROM cliente c
 INNER JOIN pedido p ON c.idCliente = p.idCliente
 WHERE p.fechaEntrega > p.fechaEsperada;
-Nombre_Cliente
----------------
-Empresa A
-Empresa B
 
-11. Devuelve un listado de las diferentes gamas de producto que ha comprado
-cada cliente.
+-- 11. Devuelve un listado de las diferentes gamas de producto que ha comprado cada cliente.
 SELECT c.nombre AS Nombre_Cliente, GROUP_CONCAT(gp.gama) AS Gamas_Compradas
 FROM cliente c
 LEFT JOIN pedido p ON c.idCliente = p.idCliente
@@ -353,6 +331,7 @@ LEFT JOIN detallePedido dp ON p.idPedido = dp.idPedido
 LEFT JOIN producto pr ON dp.idProducto = pr.idProducto
 LEFT JOIN gama_producto gp ON pr.idGamaProducto = gp.idGamaProducto
 GROUP BY c.idCliente;
+```
 Nombre_Cliente  |  Gamas_Compradas
 -------------------------------------
 Empresa A       |  Electrodomésticos, Muebles
