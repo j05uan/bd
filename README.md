@@ -8,6 +8,12 @@ FROM oficina o
 INNER JOIN codigoPostal cp ON o.idCodigoPostal = cp.idCodigoPostal
 INNER JOIN ciudad c ON cp.idCiudad = c.idCiudad;
 ~~~
-
++-----------+---------+
+| idOficina | ciudad  |
++-----------+---------+
+|         1 | Sevilla      |
+|         2 | Málaga    |
+|         3 | Ibiza        |
++-----------+---------+
 
 
