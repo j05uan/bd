@@ -7,7 +7,7 @@ SELECT o.idOficina, c.ciudad
 FROM oficina o
 INNER JOIN codigoPostal cp ON o.idCodigoPostal = cp.idCodigoPostal
 INNER JOIN ciudad c ON cp.idCiudad = c.idCiudad;
-~~~
+
 +-----------+---------+
 | idOficina | ciudad  |
 +-----------+---------+
@@ -15,5 +15,5 @@ INNER JOIN ciudad c ON cp.idCiudad = c.idCiudad;
 |         2 | Málaga    |
 |         3 | Ibiza        |
 +-----------+---------+
-
+~~~
 
