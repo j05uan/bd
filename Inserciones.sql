@@ -205,3 +205,24 @@ INSERT INTO empleado (idEmpleado, nombre, apellidos, extension, email, idOficina
 (8, 'Camila', 'Solano', 101, 'camila.solano@example.com', 1, NULL, 1),
 (7, 'Santiago', 'Serrano', 102, 'santi@example.com', 1, NULL, 1),
 (9, 'Carlos', 'Lòpez', 101, 'carlo@example.com', 1, 7, 1);
+INSERT INTO puesto(puesto) VALUES ('Jefe Empresa');
+INSERT INTO empleado (idEmpleado, nombre, apellidos, extension, email, idOficina, codigoJefe, idPuesto) VALUES (22, 'Juan Pablo', 'Lopez', 101, 'juanpablolopez@example.com', 1, NULL, 7);
+
+UPDATE empleado SET codigoJefe=7 WHERE codigoJefe IS NULL;
+UPDATE empleado SET codigoJefe=NULL WHERE nombre = 'Juan Pablo';
+INSERT INTO estado (estado)VALUES 
+('Rechazado');
+INSERT INTO pedido (fechaPedido,fechaEsperada,fechaEntrega,idEstado,comentario,idCliente) VALUES 
+ ('2009-05-23','2009-08-08','2010-12-02',4,'Rechazado por retardo',3);
+INSERT INTO pedido (fechaPedido, fechaEsperada, fechaEntrega, idEstado, comentario, idCliente) VALUES ('2009-03-03', '2009-01-08', '2009-11-02', 4, 'Rechazado por retardo', 2);
+INSERT INTO gama_producto (gama, descripcionTexto, descripcionHTML, imagen) VALUES ('Ornamentales', 'Descripcion de los Ornamentales', 'Descripcion HTML de los productos Ornamentales','Ornamentales.png');
+
+INSERT INTO producto (nombre, idGamaProducto, dimension, proveedor, descripcion, cantidadEnStock, precioVenta, precioProveedor) VALUES ('Silla de comedor', 4, '50x50x90 cm', 1, 'Silla de comedor de diseño ergonómico y tapizado en tela resistente.', 120, 79.99, 59.99), ('Mantel de mesa', 4, '150x150 cm', 2, 'Mantel de mesa rectangular con diseño floral y bordes reforzados.', 150, 19.99, 14.99), ('Set de cubiertos', 4, '30x10x5 cm', 3, 'Set de cubiertos de acero inoxidable para 4 personas con estuche incluido.', 200, 29.99, 24.99);
+
+INSERT INTO empleado (idEmpleado, nombre, apellidos, extension, email, idOficina, codigoJefe, idPuesto) VALUES 
+(11, 'Camila', 'Sanabria', 101, 'camila.sanabria@example.com', 3,7, 3), 
+(29, 'Oscar', 'Serrano', 102, 'santi@example.com', 2, 1, 1),
+(30, 'Yohber', 'Gomez', 101, 'elmejorprofedecampus@example.com', 3, 7, 2);
+
+INSERT INTO cliente (nombre, nombreContacto, apellidos, fax, direccion, especificacionDireccion, idCodigoPostal, idEmpleado, limiteCredito) VALUES ('Campus', 'Juan Pablo', 'Lòpez Amaya', NULL, 'Diagonal 14C 57 - 59', 'bloque C Apto 203', 40, 30, '30000000'), ('Elenas', 'Maria', 'Carvajal', NULL, 'Cañaverla', 'Conjunto Piedecuesta', 29, 11, '12000');
+
