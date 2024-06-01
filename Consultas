@@ -107,10 +107,16 @@ select * from estado;
 realizaron algún pago en 2008. Tenga en cuenta que deberá eliminar
 aquellos códigos de cliente que aparezcan repetidos. Resuelva la consulta:
 • Utilizando la función YEAR de MySQL.
+
+SELECT DISTINCT idCliente FROM pago WHERE YEAR(fechaPago) = 2008;
+
 • Utilizando la función DATE_FORMAT de MySQL.
+
+SELECT DISTINCT idCliente FROM pago WHERE DATE_FORMAT(fechaPago, '%Y') = '2008';
+
 • Sin utilizar ninguna de las funciones anteriores.
 
-
+SELECT DISTINCT idCliente FROM pago WHERE fechaPago >= '2008-01-01' AND fechaPago <= '2008-12-31';
 
 
 9. Devuelve un listado con el código de pedido, código de cliente, fecha
@@ -134,16 +140,6 @@ resta -?
 
 
 
-
-
-
-
-
-
-
-
-
-
 11. Devuelve un listado de todos los pedidos que fueron rechazados en 2009.
 
 SELECT * FROM pedido p 
@@ -155,15 +151,12 @@ WHERE e.estado = 'Rechazado' AND YEAR(fechaEntrega) = 2009;
 |        5 | 2009-03-03  | 2009-01-08    | 2009-11-02   |        4 | Rechazado por retardo |         2 |        4 | Rechazado |
 +----------+-------------+---------------+--------------+----------+-----------------------+-----------+----------+-----------+
 
-
 12. Devuelve un listado de todos los pedidos que han sido entregados en el
 mes de enero de cualquier año.
 
 SELECT * FROM pedido 
 WHERE MONTH(fechaEntrega)=’enero;’
-
 No hay.
-
 
 13. Devuelve un listado con todos los pagos que se realizaron en el
 año 2008 mediante Paypal. Ordene el resultado de mayor a menor.
@@ -171,13 +164,11 @@ año 2008 mediante Paypal. Ordene el resultado de mayor a menor.
 SELECT * FROM pedido WHERE MONTH(fechaEntrega) = 1;
 No hay.
 
-
 14. Devuelve un listado con todas las formas de pago que aparecen en la
 tabla pago. Tenga en cuenta que no deben aparecer formas de pago
 repetidas.
 
 SELECT * FROM pago;
-
 +--------+-----------+---------------+------------+---------+
 | idPago | idCliente | idFormaDePago | fechaPago  | total   |
 +--------+-----------+---------------+------------+---------+
@@ -211,11 +202,6 @@ WHERE p.pais = 'España' AND c.ciudad = 'Madrid' AND (cl.idEmpleado = 11 OR cl.i
 
 No hay en españa.
 
-
-
-
-
-
 Consultas multitabla (Composición interna)
 
 1. Obtén un listado con el nombre de cada cliente y el nombre y apellido de su
@@ -226,7 +212,6 @@ FROM cliente cl
 JOIN empleado e ON cl.idEmpleado = e.idEmpleado 
 JOIN puesto p ON e.idPuesto = p.idPuesto 
 WHERE p.puesto = 'Representante de Ventas';
-
 +---------------+----------------+-------------------+
 | nombreCliente | nombreEmpleado | apellidosEmpleado |
 +---------------+----------------+-------------------+
@@ -258,8 +243,6 @@ JOIN empleado e ON cl.idEmpleado = e.idEmpleado
 JOIN puesto p ON e.idPuesto = p.idPuesto 
 LEFT JOIN pago pg ON cl.idCliente = pg.idCliente 
 WHERE p.puesto = 'Representante de Ventas' AND pg.idPago IS NULL;
-
-
 +---------------+----------------+-------------------+
 | nombreCliente | nombreEmpleado | apellidosEmpleado |
 +---------------+----------------+-------------------+
@@ -293,14 +276,12 @@ INNER JOIN oficina o ON e.idOficina = o.idOficina
 INNER JOIN ciudad ci ON o.idCiudad = ci.idCiudad
 LEFT JOIN pago p ON c.idCliente = p.idCliente
 WHERE p.idPago IS NULL;
-
 Nombre_Cliente  |  Nombre_Representante  |  Ciudad_Oficina
 -----------------------------------------------------------
 Empresa XYZ     |  Jorge                 |  Valencia
 Empresa XYZ     |  Laura                 |  Barcelona
 
 6. Lista la dirección de las oficinas que tengan clientes en Fuenlabrada.
-
 SELECT o.direccion AS Direccion_Oficina
 FROM oficina o
 INNER JOIN ciudad ci ON o.idCiudad = ci.idCiudad
@@ -378,7 +359,6 @@ Empresa A       |  Electrodomésticos, Muebles
 Empresa B       |  Electrónica
 Empresa C       |  NULL
 
-
 Resuelva todas las consultas utilizando las cláusulas LEFT JOIN, RIGHT JOIN, NATURAL
 LEFT JOIN y NATURAL RIGHT JOIN.
 
@@ -397,7 +377,6 @@ Nombre_Cliente  |  Nombre_Representante  |  Ciudad_Oficina
 Empresa XYZ     |  Jorge                 |  Valencia
 Empresa XYZ     |  Laura                 |  Barcelona
 
-
 2. Devuelve un listado que muestre solamente los clientes que no han
 realizado ningún pedido.
 SELECT c.nombre AS Nombre_Cliente, e.nombre AS Nombre_Representante, ci.ciudad AS Ciudad_Oficina
@@ -407,7 +386,6 @@ LEFT JOIN oficina o ON e.idOficina = o.idOficina
 LEFT JOIN ciudad ci ON o.idCiudad = ci.idCiudad
 LEFT JOIN pedido p ON c.idCliente = p.idCliente
 WHERE p.idPedido IS NULL;
-
 Nombre_Cliente  |  Nombre_Representante  |  Ciudad_Oficina
 -----------------------------------------------------------
 Empresa XYZ     |  Jorge                 |  Valencia
@@ -429,7 +407,6 @@ Nombre_Cliente  |  Nombre_Representante  |  Ciudad_Oficina
 Empresa XYZ     |  Jorge                 |  Valencia
 Empresa XYZ     |  Laura                 |  Barcelona
 
-
 4. Devuelve un listado que muestre solamente los empleados que no tienen
 una oficina asociada.
 SELECT e.nombre AS Nombre_Empleado, p.puesto AS Puesto
@@ -440,8 +417,6 @@ WHERE o.idOficina IS NULL;
 Nombre_Empleado  |  Puesto
 ---------------- | --------------------
 Santiago         |  Jefe
-
-
 
 5. Devuelve un listado que muestre solamente los empleados que no tienen un
 cliente asociado.
@@ -454,9 +429,6 @@ WHERE c.idCliente IS NULL;
 Nombre_Empleado  |  Puesto
 ---------------- | --------------------
 Santiago         |  Jefe
-
-
-
 
 6. Devuelve un listado que muestre solamente los empleados que no tienen un
 cliente asociado junto con los datos de la oficina donde trabajan.
