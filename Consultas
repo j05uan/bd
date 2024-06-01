@@ -10,9 +10,9 @@ INNER JOIN ciudad c ON cp.idCiudad = c.idCiudad;
 +-----------+---------+
 | idOficina | ciudad  |
 +-----------+---------+
-|         1 | Sevilla      |
-|         2 | Málaga    |
-|         3 | Ibiza        |
+|         1 | Sevilla |
+|         2 | Málaga  |
+|         3 | Ibiza   |
 +-----------+---------+
 ~~~
 2.Devuelve un listado con la ciudad y el teléfono de las oficinas de España.
